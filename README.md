@@ -39,3 +39,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Color Palette
+
+All colors use the Tailwind `zinc` scale.
+
+| Token | Tailwind class | Usage |
+|---|---|---|
+| Sidebar background | `bg-zinc-900` | Main sidebar |
+| Sidebar hover / active | `bg-zinc-800` | Nav item states, header border |
+| Sidebar text (active) | `text-zinc-100` | Active nav label, name |
+| Sidebar text (inactive) | `text-zinc-500` | Inactive nav labels, subtitle |
+| Sidebar chevrons | `text-zinc-600` | Expand/collapse icons |
+| Main background | `bg-zinc-100` | Content area |
+| Heading text | `text-zinc-800` | Page titles |
+| Body text | `text-zinc-600` | Paragraph content |
+| Secondary text | `text-zinc-500` | Subtitles, descriptions |
+| Muted text | `text-zinc-400` | Dates, labels, breadcrumbs |
+| Card background | `bg-zinc-50` | Footer social card |
+| Card border / dividers | `border-zinc-200` / `bg-zinc-200` | Footer card outline and separators |
