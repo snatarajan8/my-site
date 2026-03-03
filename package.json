@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "deploy": "bash ./scripts/deploy.sh"
+    "deploy": "bash ./scripts/deploy.sh",
+    "new-blog": "bash ./scripts/new-blog.sh",
+    "new-project": "bash ./scripts/new-project.sh"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
