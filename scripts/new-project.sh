@@ -13,7 +13,9 @@ REPO="/home/shyam/Shyam/Work/my-site"
 SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
 COMPONENT=$(echo "$TITLE" | sed 's/[^a-zA-Z0-9 ]//g' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) substr($i,2); print}' | tr -d ' ')
 DATE=$(date '+%B %-d, %Y')
+DATE_ISO=$(date '+%Y-%m-%d')
 FILE="$REPO/src/app/projects/$SLUG/page.tsx"
+META="$REPO/src/app/projects/$SLUG/meta.json"
 
 if [ -f "$FILE" ]; then
   echo "Error: $FILE already exists."
@@ -38,6 +40,14 @@ export default function ${COMPONENT}() {
       </div>
     </article>
   );
+}
+EOF
+
+cat > "$META" <<EOF
+{
+  "title": "${TITLE}",
+  "date": "${DATE}",
+  "dateISO": "${DATE_ISO}"
 }
 EOF
 

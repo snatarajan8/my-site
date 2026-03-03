@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "rm -rf .next && next dev --turbopack",
+    "build": "rm -rf .next && eslint && next build",
     "start": "next start",
     "lint": "eslint",
     "deploy": "bash ./scripts/deploy.sh",

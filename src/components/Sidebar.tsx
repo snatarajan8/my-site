@@ -5,23 +5,20 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FaChevronDown, FaChevronRight } from "react-icons/fa";
 
-const nav = [
-  { id: "about", label: "About Me", href: "/about", items: [] },
-  {
-    id: "blog",
-    label: "Blog",
-    href: "/blog",
-    items: [{ label: "Testing the Blog UI", href: "/blog/test-post" }],
-  },
-  {
-    id: "projects",
-    label: "Projects",
-    href: "/projects",
-    items: [] as { label: string; href: string }[],
-  },
-];
+type NavItem = { label: string; href: string };
 
-export default function Sidebar() {
+export default function Sidebar({
+  blogItems,
+  projectItems,
+}: {
+  blogItems: NavItem[];
+  projectItems: NavItem[];
+}) {
+  const nav = [
+    { id: "about", label: "About Me", href: "/about", items: [] as NavItem[] },
+    { id: "blog", label: "Blog", href: "/blog", items: blogItems },
+    { id: "projects", label: "Projects", href: "/projects", items: projectItems },
+  ];
   const pathname = usePathname();
   const router = useRouter();
 
