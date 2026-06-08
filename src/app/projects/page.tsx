@@ -22,22 +22,57 @@ export default function Projects() {
   const projects = getProjects();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-zinc-800">Projects</h1>
+    <div className="max-w-2xl">
+      <p
+        className="text-accent"
+        style={{
+          fontFamily: "var(--font-ibm-plex-mono), monospace",
+          fontSize: "10.5px",
+          fontWeight: 500,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+        }}
+      >
+        Side Projects
+      </p>
+      <h1
+        className="mt-2 mb-10 text-ink"
+        style={{
+          fontFamily: "var(--font-fraunces), Georgia, serif",
+          fontSize: "1.875rem",
+          fontWeight: 600,
+          letterSpacing: "-0.025em",
+          lineHeight: 1.15,
+        }}
+      >
+        Projects
+      </h1>
+
       {projects.length === 0 ? (
-        <p className="mt-4 text-zinc-400">No projects yet.</p>
+        <p className="text-ink-dim" style={{ fontFamily: "var(--font-ibm-plex-mono), monospace", fontSize: "13px" }}>
+          No projects yet.
+        </p>
       ) : (
-        <ul className="mt-6 space-y-3">
+        <ul className="divide-y divide-site-border">
           {projects.map((p) => (
             <li key={p.slug}>
               <Link
                 href={`/projects/${p.slug}`}
-                className="group flex items-baseline justify-between"
+                className="group flex items-baseline justify-between py-4 transition-colors duration-150"
               >
-                <span className="font-medium text-zinc-800 group-hover:text-zinc-600">
+                <span className="text-ink-muted group-hover:text-ink transition-colors duration-150 text-[14px] leading-snug pr-4">
                   {p.title}
                 </span>
-                <span className="text-sm text-zinc-400">{p.date}</span>
+                <span
+                  className="text-ink-dim shrink-0 group-hover:text-accent transition-colors duration-150"
+                  style={{
+                    fontFamily: "var(--font-ibm-plex-mono), monospace",
+                    fontSize: "11px",
+                    letterSpacing: "0.04em",
+                  }}
+                >
+                  {p.date}
+                </span>
               </Link>
             </li>
           ))}
