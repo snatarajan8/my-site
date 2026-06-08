@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import Sidebar from "./Sidebar";
 
-function getNavItems(section: "blog" | "projects") {
+function getNavItems(section: "blog" | "projects" | "work") {
   const dir = path.join(process.cwd(), "src/app", section);
   return fs
     .readdirSync(dir)
@@ -20,5 +20,6 @@ function getNavItems(section: "blog" | "projects") {
 export default function SidebarWrapper() {
   const blogItems = getNavItems("blog");
   const projectItems = getNavItems("projects");
-  return <Sidebar blogItems={blogItems} projectItems={projectItems} />;
+  const workItems = getNavItems("work");
+  return <Sidebar blogItems={blogItems} projectItems={projectItems} workItems={workItems} />;
 }

@@ -10,12 +10,15 @@ type NavItem = { label: string; href: string };
 export default function Sidebar({
   blogItems,
   projectItems,
+  workItems,
 }: {
   blogItems: NavItem[];
   projectItems: NavItem[];
+  workItems: NavItem[];
 }) {
   const nav = [
     { id: "about", label: "About Me", href: "/about", items: [] as NavItem[] },
+    { id: "work", label: "My Work", href: "/work", items: workItems },
     { id: "blog", label: "Blog", href: "/blog", items: blogItems },
     { id: "projects", label: "Projects", href: "/projects", items: projectItems },
   ];
@@ -23,6 +26,7 @@ export default function Sidebar({
   const router = useRouter();
 
   const [expanded, setExpanded] = useState<Record<string, boolean>>({
+    work: pathname.startsWith("/work"),
     blog: pathname.startsWith("/blog"),
     projects: pathname.startsWith("/projects"),
   });
