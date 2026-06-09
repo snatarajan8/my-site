@@ -11,23 +11,19 @@ export default function Security() {
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed">
         <p>
-          {"Two security overhauls ran in parallel through early 2026. Both deal with trust between Falcon components that previously communicated without cryptographic verification."}
+          {"For most of Falcon's history, communication between components relied on network-level trust. The master could receive instructions from any process that could reach its API; a message on the Pub/Sub topic would be acted on by whoever was listening. That's workable in a tightly controlled internal network, but it doesn't hold as the platform's footprint grows and attack surface expands. Two security overhauls ran in parallel through early 2026 to address this."}
         </p>
 
         <p>
-          {"KMS-signed Pub/Sub messages between the falcon-cloud agent and the Cloud Run deployer. Every message from the agent carries a KMS signature; the deployer verifies it before acting. I set up the keys in vault_crypto-kms, wired the signing into de_falcon-service, and implemented verification in de_falcon-cloud-run-deployer. The algorithm started as SHA256 on the signing side, caught a mismatch during review, and I aligned both to SHA512."}
+          {"KMS-signed messages for Falcon Cloud: every message the falcon-cloud agent publishes carries a KMS signature generated at publish time. The Cloud Run deployer verifies the signature before executing any action — enabling, disabling, scaling, or deploying a service. Without a valid signature from the known key, the message is dropped. I set up the keys in GCP, wired signing into Falcon Service, and implemented verification in the deployer. The signing algorithm went through one correction during review — SHA256 on the signing side didn't match SHA512 on the verification side — caught before production."}
         </p>
 
         <p>
-          {"mTLS between falcon-master and falcon-cloud. This touched the GCP Certificate Authority Service (custom CA template with a SAN allowlist), cert-manager certificates provisioned via GoogleCASIssuer, and cluster-config patches to mount the certificates and configure the gRPC server. The rollout was staged — cktest first, then prod, each gated on the previous PR landing clean."}
+          {"mTLS between falcon-master and falcon-cloud: certificates provisioned via GCP Certificate Authority Service using a custom CA template with a SAN allowlist, managed by cert-manager via GoogleCASIssuer, and mounted to the Falcon Service pods. The gRPC server enforces mutual TLS on all connections from the cloud agent. The rollout was staged — cktest environments first, then production — with each step gated on the previous landing clean and the connection verified before proceeding."}
         </p>
 
         <p>
-          {"A path correction PR mid-rollout (paas_cluster-config#30110) is worth noting. I had the wrong mental model of the GRPCServerOptions to ServerOptions struct chain and placed the TLS config block at the wrong YAML path. The PR description walks through the struct chain explicitly so the next person doesn't make the same mistake."}
-        </p>
-
-        <p>
-          {"Earlier in 2024: moved DB migration secrets to Google Secret Manager behind a toggle, then rolled it out to prod. The binary authorization attestor IAM work for the Cloud Run product line also lives in this area — granting the deployer service account the right permissions to attest image builds before Cloud Run accepts them."}
+          {"Earlier security work in 2024: moved DB migration secrets from chart values to Google Secret Manager behind a feature flag, then rolled it out to production. Binary auth attestor IAM bindings for the Cloud Run deployer, so Cloud Run only accepts images that have been attested as part of the build process."}
         </p>
       </div>
     </article>

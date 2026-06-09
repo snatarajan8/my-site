@@ -11,23 +11,19 @@ export default function Contributions() {
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed">
         <p>
-          {"A handful of single-PR contributions in repos owned by other teams. Each is small, but the reason behind each one is worth noting."}
+          {"A handful of contributions in repos owned by other teams. None are large changes, but each one had a concrete reason behind it."}
         </p>
 
         <p>
-          {"de_python#28 fixed a CircleCI build break after an Artifactory cutover. The fix was one line. The owning team was slow to respond and the break was blocking other people, so I just did it."}
+          {"Fixed a broken CircleCI build in a shared Python tooling repo after an Artifactory cutover. The owning team was slow to respond and the break was blocking other people. One-line fix, unblocked immediately."}
         </p>
 
         <p>
-          {"vault_intuit-matching-service#1547 added dive-generated reliability features to another team's progressive rollout spec. I noted in the PR body that I'd reach out on Slack to discuss. The intention was to show what the new Falcon analysis tooling actually does on real production config, not just in documentation."}
+          {"Applied the dive reliability tooling to another team's production Argo Rollouts spec — the first real-world demonstration of what auto-generated progressive delivery analysis looks like on production config, rather than just in documentation. The intention was to show teams what the tooling actually produces, not just describe it."}
         </p>
 
         <p>
-          {"de_protoc-gen-registration#2 updated a mod and sum file for a proto codegen tool. The PR body: 'No clue how to test this.' It worked."}
-        </p>
-
-        <p>
-          {"cloud_tf-service-bootstrap#4448 enabled Cloud Run APIs in the Falcon prod GCP project. One-line Terraform change, required to make the entire Cloud Run product line functional in production. Disproportionate impact for the size of the diff."}
+          {"Enabled Cloud Run APIs in the Falcon prod GCP project via a one-line Terraform change. A small diff with disproportionate impact — without it, none of the Falcon Cloud product line could run in production."}
         </p>
       </div>
     </article>

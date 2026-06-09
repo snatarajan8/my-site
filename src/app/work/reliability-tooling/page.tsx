@@ -7,27 +7,23 @@ export default function ReliabilityTooling() {
       <h1 className="mt-2 text-2xl font-bold text-zinc-800">
         Reliability Tooling / dive CLI
       </h1>
-      <p className="mt-1 text-sm text-zinc-400">Sep 2024 – Feb 2025 · 18 + 15 PRs across two repos</p>
+      <p className="mt-1 text-sm text-zinc-400">Sep 2024 – Feb 2025</p>
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed">
         <p>
-          {"Built this from scratch. de_reliability-tooling is a Go binary that auto-generates progressive-rollout analysis specs for Argo Rollouts. You give it a service name and component, it queries New Relic for your service's latency and error rate distributions, decides on facets (per-endpoint groupings), sets thresholds, and edits the rollout YAML in your working tree. The TUI is built with Charmbracelet bubbletea."}
+          {"Setting up progressive delivery analysis for a service used to mean guessing at thresholds. An engineer would look at their service's latency and error rate, pick numbers that felt reasonable, and hope. Thresholds set too tight would abort healthy canaries; thresholds set too loose would let bad deploys pass analysis silently. dive solves this by reading from production data instead of intuition."}
         </p>
 
         <p>
-          {"The generate-facets command is the core piece. It runs the NR queries, groups endpoints by traffic volume, and writes analysis steps with dynamic thresholds. Before this existed, on-call engineers were setting analysis thresholds by hand based on intuition. Now it's a 30-second CLI command that reads from production data."}
+          {"The tool is a Go binary with a Charmbracelet bubbletea TUI. You give it a service name and component, it queries New Relic for your service's real latency and error rate distributions, groups endpoints by traffic volume, sets thresholds based on observed baselines, and writes the analysis steps directly into your rollout YAML. What used to be a manual exercise requiring New Relic familiarity and Argo Rollouts expertise is now a 30-second CLI command."}
         </p>
 
         <p>
-          {"de_dive-cktool-plugin wraps the binary as a Python cktool plugin. Engineers install it once with 'ck plugin install dive' and run 'ck dive reliability-tooling' from any service repo. The plugin handles NR API key management, Docker image pulling from GAR, and volume mounts. One non-obvious issue: Docker on Mac requires the mount path to be under the user's home directory. The initial path (/usr/local/lib/ck-dive) didn't qualify and silently failed."}
+          {"I built it as a complete product: Go binary, Docker image, Python cktool plugin so engineers install it with 'ck plugin install dive' from any service repo, documentation on the Falcon site, and a first real-world deployment on another team's production rollout spec to demonstrate the output on real service config. The plugin handles NR API key management, Docker image pulling from GAR, and volume mounts — the kind of friction that kills adoption if left to the caller."}
         </p>
 
         <p>
-          {"The last meaningful PR (#16) fixed a bug where subprocess.run was always returning non-None, which caused the tool to error on every invocation in the stable release. Small, embarrassing, and fixed. The pattern of committing dev-loop fixes immediately rather than batching them is how this repo stayed usable."}
-        </p>
-
-        <p>
-          {"End-to-end productization: Go binary, Docker image, cktool plugin, docs on the Falcon site, and a real-world evangelist PR on another team's rollout spec (vault_intuit-matching-service#1547) to demonstrate what the tool actually does on production config."}
+          {"The impact is most visible for teams setting up progressive delivery for the first time. They get a complete, calibrated Argo analysis spec ready to commit, rather than a blank template and a guess."}
         </p>
       </div>
     </article>

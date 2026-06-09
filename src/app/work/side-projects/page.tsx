@@ -15,15 +15,15 @@ export default function SideProjects() {
         </p>
 
         <p>
-          {"de_bird-facts is a Node.js service that returns bird trivia. It has no users in any business sense. What it has is full on-rails CK service infrastructure: Falcon-managed deploys, Argo Rollouts progressive delivery, the ck-service Helm chart, CircleCI. I deploy it constantly to validate platform changes. If a configmap cleanup migration is supposed to delete configmaps, I verify it by deploying bird-facts and watching. Several PR descriptions in paas_cluster-config cite it explicitly: 'will monitor by deploying bird-facts and seeing that configmaps are deleted.' Because I own the service, I can do things to it that no team would tolerate on a real service — remove components, force progressive demotions, break things intentionally."}
+          {"de_bird-facts is a Node.js service that returns bird trivia. Its business value is zero. Its platform value is high: it runs the full CK service stack — Falcon-managed deploys, Argo Rollouts progressive delivery, the ck-service Helm chart, CircleCI — and I can do things to it that no team would tolerate on a real service. Remove components. Force rollbacks. Break things intentionally to see how the platform responds. Several deploy changes were validated by deploying bird-facts and watching the outcome before any real service was touched."}
         </p>
 
         <p>
-          {"de_bird-facts-cloud-run is the Cloud Run sibling, built so I could test Falcon Cloud end-to-end without asking a real product team to be the guinea pig. It absorbed every early failure in the Cloud Run product line. Every new action (deploy, enable, disable, scale, mTLS) got validated here first."}
+          {"de_bird-facts-cloud-run is the Cloud Run sibling, built specifically to test Falcon Cloud end-to-end before asking any real product team to onboard. It absorbed every early failure in the Cloud Run product line — deploy errors, message routing bugs, IAM misconfigurations, mTLS certificate issues. By the time I asked other teams to use Falcon Cloud, it had already run thousands of deploys on bird-facts-cloud-run."}
         </p>
 
         <p>
-          {"de_snatarajan-site started as a personal website and pivoted in the second PR to a PR-analytics dashboard for the entire ck-private org — 18 months of PR data, per-repo views, year-over-year comparisons. One decision I'm glad about: #5 dropped the aggregate metrics because they were masking the per-PR story. When your own dashboard is lying to you, cut the lying part."}
+          {"de_snatarajan-site is this website, which started as a personal site and expanded into a PR analytics dashboard for the ck-private org — 18 months of data, per-repo views, year-over-year comparisons. One decision I'm glad about: an early version had aggregate metrics that masked the per-PR story. When your own dashboard is lying to you, cut the lying part."}
         </p>
       </div>
     </article>

@@ -30,9 +30,9 @@ export default function Home() {
       </h1>
 
       <p className="text-ink-muted leading-relaxed mb-2" style={{ maxWidth: "420px" }}>
-        I build deploy and release infrastructure. Three years at Credit Karma
-        as the primary engineer on Falcon — their Kubernetes and Cloud Run
-        control plane.
+        I build deployment and release infrastructure. Over three years at
+        Credit Karma as the primary engineer on Falcon — their Kubernetes and
+        Cloud Run control plane.
       </p>
 
       <p className="text-ink-muted leading-relaxed mb-10" style={{ maxWidth: "420px" }}>

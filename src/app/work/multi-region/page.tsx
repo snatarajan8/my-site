@@ -11,19 +11,19 @@ export default function MultiRegion() {
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed">
         <p>
-          {"Almost everything I ship has a UK follow-up. The recipe is consistent: implement in US-central, test, open a second PR targeting UK clusters, often blocked on networking tickets from another team. Sometimes those tickets move fast, sometimes they don't."}
+          {"Credit Karma operates in both US and UK regions, and almost every Falcon feature has to work in both. The challenge isn't just deploying the same config twice — UK infrastructure has different GCP project prefixes, different cluster topologies, different network paths, and different regulatory requirements. A change that works cleanly in US-central can fail silently in UK for reasons that only surface under real traffic."}
         </p>
 
         <p>
-          {"One PR description is honest about this: paas_cluster-config#24650 says 'got crickets on the thread so I'm gonna merge and revert if/when it doesn't work.' That's an accurate description of how you keep moving when you depend on a team that isn't responsive. You merge, monitor, and revert if needed. The alternative is waiting indefinitely."}
+          {"I've owned the UK follow-up for most of what I've shipped on Falcon. Regional awareness in the DB migration chart so UK services use UK-specific connection strings and credentials. UK-specific New Relic alerting profiles in the Argo analysis templates. Explicit UK cluster rollouts for every structural change. Debugging the Spanner project-prefix bugs that only manifested in UK environments — where the project ID uses 'ukprod' instead of 'ckprod,' a distinction that's obvious in hindsight but requires four sequential PRs to fully close once it surfaces."}
         </p>
 
         <p>
-          {"The UK-specific bugs that surfaced over the years follow a pattern. The Spanner UK project prefix bug (using ckprod instead of ukprod in path construction) required four sequential PRs to fully close — each one exposed the next edge case. UK FEDS version bumps regularly lagged behind US and needed explicit catch-up PRs. The UK-specific NR profile in the Argo analysis templates required separate chart changes."}
+          {"The us-east4 expansion for Falcon Cloud follows the same discipline. Each deploy publishes separate messages for us-central1 and us-east4, with explicit configuration blocks per datacenter rather than wildcards. The mTLS rollout provisions certificates for both regions explicitly. The goal is that a second-region deployment isn't an afterthought bolted on later — it's part of the initial design."}
         </p>
 
         <p>
-          {"us-east4 expansion shows up most visibly in the mTLS work — those PRs provision certificates in both us-central1 and us-east4 explicitly rather than relying on a wildcard. The falcon-cloud config PRs follow the same pattern: separate environment blocks for each DC, provisioned together."}
+          {"When cross-team dependencies slow UK rollouts down, the pattern is: merge the US change, document the UK blocker explicitly, and follow up. Waiting indefinitely for another team to unblock is worse than shipping the US path and tracking the UK gap openly."}
         </p>
       </div>
     </article>

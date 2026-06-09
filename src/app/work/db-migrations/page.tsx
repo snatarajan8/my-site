@@ -11,19 +11,19 @@ export default function DbMigrations() {
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed">
         <p>
-          {"The DB migration arm of Falcon spans de_db-migrate-chart (the Helm chart that renders the migration Job), de_falcon-service (the wiring code), and paas_cluster-config (the version bumps and rollout config). Supports MySQL and Spanner, handles secret-manager lookups, and manages workload identity service-account bindings."}
+          {"Running database migrations safely inside a deploy pipeline is harder than it looks. The migration job needs regional awareness so UK services connect to the right databases, correct workload identity bindings so the job runs with the right GCP service account, and credentials pulled from Secret Manager rather than hardcoded values. If any of this drifts between releases, the migration fails or runs with the wrong identity — quietly, in production."}
         </p>
 
         <p>
-          {"Regional awareness came first in early 2023 — the chart needed to pass region to the migration job so UK runs could use UK-specific connection strings and credentials. WLIDv2 (Workload Identity v2) followed a few months later: additional chart values and a per-job toggle to switch from node service account to workload identity."}
+          {"Falcon's DB migration arm handles MySQL and Spanner across US and UK environments. It manages the Helm chart that renders the migration Job, the wiring inside Falcon Service, and the GitOps configuration. I've owned all three layers. Teams using Falcon for schema changes get regional awareness, secret-manager credential lookup, and workload identity management without having to wire any of it themselves."}
         </p>
 
         <p>
-          {"The Spanner migration push ran from late 2023 through most of 2024. I opened support behind a toggle, adapted the chart, then spent several PRs debugging UK-specific issues. UK projects use 'ukprod' as a project prefix, not 'ckprod.' That sounds obvious in hindsight but it only surfaces in production, and closing it required four sequential PRs as each edge case revealed the next."}
+          {"Spanner support was the hardest part to land. I opened the feature behind a toggle in late 2023, adapted the chart, and then spent months debugging UK-specific issues — UK GCP projects use 'ukprod' as a project prefix, not 'ckprod,' a distinction that only surfaces in production and required four sequential PRs to fully close as each edge case revealed the next."}
         </p>
 
         <p>
-          {"The final piece, de_db-migrate-chart#50, replaced a write-once 'does this KSA exist? if so, skip' gate with a reconciliation loop that re-checks and re-applies the KSA annotation on every release. The old design meant annotations silently drifted after the first write. The new design is level-triggered — it re-owns the annotation every time, regardless of prior state."}
+          {"The most important structural fix replaced a write-once identity gate with a level-triggered reconciliation loop. The old design checked whether a Kubernetes service account annotation existed and skipped writing it if it did — which meant annotations could drift silently after the first write. The new design re-applies the annotation on every release, regardless of prior state. It re-owns the configuration every time rather than assuming it's still correct."}
         </p>
       </div>
     </article>
